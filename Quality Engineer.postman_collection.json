@@ -1,0 +1,541 @@
+{
+	"info": {
+		"_postman_id": "bc4df3e9-d1ab-4f75-a91d-6d075acd357f",
+		"name": "Quality Engineer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User/CreareWithArray",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Status code is 200.\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"if (pm.response.code == 200) {",
+							"    const jsonData = pm.response.json();",
+							"            pm.environment.set(\"userCode\", jsonData.code);  ",
+							"}",
+							"console.log(\"1-UserCode is: \" +pm.environment.get(\"userCode\"));",
+							"",
+							"",
+							"if (pm.response.code == 200) {",
+							"   const jsonData = pm.response.json();",
+							"",
+							"    var jsonDataUser;",
+							"",
+							"    var i;",
+							"",
+							"    if (jsonData.code == \"200\") {",
+							"        jsonDataUser =jsonData;",
+							"    }",
+							"        pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : The user is created.\", function () {",
+							"            pm.expect(jsonDataUser).to.have.property(\"message\", \"ok\");",
+							"            });",
+							"}",
+							"",
+							"// Wait 5 secs before the next try",
+							"(function myLoop(i) {",
+							"    setTimeout(function () {",
+							"        console.log('sleep ' + i);",
+							"        if (--i) myLoop(i);",
+							"    }, 1000)",
+							"})(5); "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require(\"moment\");",
+							"",
+							"pm.environment.set('userId', moment());",
+							"pm.environment.set('username', moment().format(\"YYMMDD-HHmm\"));",
+							"pm.environment.set('firstName', 'John-' + moment().format(\"YYMMDD-HHmmss\"));",
+							"pm.environment.set('lastName', 'John-' + moment().format(\"YYMMDD-HHmmss\"));",
+							"pm.environment.set('email', 'John-' + moment().format(\"YYMMDD-HHmmss\"));",
+							"pm.environment.set('password', 'John-' + moment().format(\"YYMMDD-HHmmss\"));",
+							"pm.environment.set('phone', 'John-' + moment().format(\"YYMMDD-HHmmss\"));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"username\": \"{{username}}\",\n        \"firstName\": \"{{firstName}}\",\n        \"lastName\": \"{{lastName}}\",\n        \"email\": \"{{email}}\",\n        \"password\": \"{{password}}\",\n        \"phone\": \"{{phone}}\",\n        \"userStatus\": 0\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/user/createWithArray",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"user",
+						"createWithArray"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Status Code is 200.\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"if (pm.response.code == 200) {",
+							"    var jsonData = pm.response.json();",
+							"    console.log(jsonData);",
+							"        pm.environment.set(\"userId\", jsonData.id);  ",
+							"}",
+							"console.log(\"1-userId is: \" +pm.environment.get(\"userId\"));",
+							"",
+							"",
+							"",
+							"if (pm.response.code == 200) {",
+							"   const jsonData = pm.response.json();",
+							"",
+							"    var jsonDataUser;",
+							"",
+							"    var i;",
+							"",
+							"    if (jsonData.username == pm.environment.get(\"username\")) {",
+							"        jsonDataUser =jsonData;",
+							"    }",
+							"        pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : The user is created.\", function () {",
+							"            pm.expect(jsonDataUser).to.have.property(\"username\", pm.environment.get(\"username\"));",
+							"            pm.expect(jsonDataUser).to.have.property(\"firstName\", pm.environment.get(\"firstName\"));",
+							"            pm.expect(jsonDataUser).to.have.property(\"lastName\", pm.environment.get(\"lastName\"));",
+							"            pm.expect(jsonDataUser).to.have.property(\"email\", pm.environment.get(\"email\"));",
+							"            pm.expect(jsonDataUser).to.have.property(\"password\", pm.environment.get(\"password\"));",
+							"            pm.expect(jsonDataUser).to.have.property(\"phone\", pm.environment.get(\"phone\"));",
+							"",
+							"",
+							"            });",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "special",
+						"value": "key",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BaseURL}}/user/{{username}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User/Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Status Code is 200.\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "special",
+						"value": "key",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseURL}}/user/login?username={{username}}&password={{password}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"user",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Status code is 200.\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"if (pm.response.code == 200) {",
+							"    const jsonData = pm.response.json();",
+							"            pm.environment.set(\"userCode\", jsonData.code);",
+							"            pm.environment.set(\"userId\", jsonData.message);  ",
+							"}",
+							"console.log(\"1-UserCode is: \" +pm.environment.get(\"userCode\"));",
+							"console.log(\"1-userId is: \" +pm.environment.get(\"userId\"));",
+							"",
+							"// Wait 5 secs before the next try",
+							"(function myLoop(i) {",
+							"    setTimeout(function () {",
+							"        console.log('sleep ' + i);",
+							"        if (--i) myLoop(i);",
+							"    }, 1000)",
+							"})(5); ",
+							"",
+							"",
+							"",
+							"",
+							"// if (pm.response.code == 200) {",
+							"//    const jsonData = pm.response.json();",
+							"",
+							"//     var jsonDataUser;",
+							"",
+							"//     var i;",
+							"",
+							"//     if (jsonData.code == \"200\") {",
+							"//         jsonDataUser =jsonData;",
+							"//     }",
+							"//         pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : The user is created.\", function () {",
+							"//             pm.expect(jsonDataUser).to.have.property(\"message\", \"ok\");",
+							"//             });",
+							"// }",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require(\"moment\");",
+							"",
+							"pm.environment.set('usernameUpdated', 'John-' + moment().format());",
+							"pm.environment.set('firstNameUpdated', 'John-' + moment().format(\"YYMMDD-HHmmss\"));",
+							"pm.environment.set('lastNameUpdated', 'John-' + moment().format(\"YYMMDD-HHmmss\"));",
+							"pm.environment.set('emailUpdated', 'John-' + moment().format(\"YYMMDD-HHmmss\"));",
+							"pm.environment.set('passwordUpdated', 'John-' + moment().format(\"YYMMDD-HHmmss\"));",
+							"pm.environment.set('phoneUpdated', 'John-' + moment().format(\"YYMMDD-HHmmss\"));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "special",
+						"value": "key",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{usernameUpdated}}\",\n    \"firstName\": \"{{firstNameUpdated}}\",\n    \"lastName\": \"{{lastNameUpdated}}\",\n    \"email\": \"{{emailUpdated}}\",\n    \"password\": \"{{passwordUpdated}}\",\n    \"phone\": \"{{phoneUpdated}}\",\n    \"userStatus\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/user/{{username}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"user",
+						"{{username}}"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "special-key",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Status Code is 200.\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"if (pm.response.code == 200) {",
+							"   const jsonData = pm.response.json();",
+							"",
+							"    var jsonDataUser;",
+							"",
+							"    var i;",
+							"",
+							"    if (jsonData.username == pm.environment.get(\"usernameUpdated\")) {",
+							"        jsonDataUser =jsonData;",
+							"    }",
+							"        pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : The user is Updated.\", function () {",
+							"            pm.expect(jsonDataUser).to.have.property(\"username\", pm.environment.get(\"usernameUpdated\"));",
+							"            pm.expect(jsonDataUser).to.have.property(\"firstName\", pm.environment.get(\"firstNameUpdated\"));",
+							"            pm.expect(jsonDataUser).to.have.property(\"lastName\", pm.environment.get(\"lastNameUpdated\"));",
+							"            pm.expect(jsonDataUser).to.have.property(\"email\", pm.environment.get(\"emailUpdated\"));",
+							"            pm.expect(jsonDataUser).to.have.property(\"password\", pm.environment.get(\"passwordUpdated\"));",
+							"            pm.expect(jsonDataUser).to.have.property(\"phone\", pm.environment.get(\"phoneUpdated\"));",
+							"",
+							"",
+							"            });",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "special",
+						"value": "key",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseURL}}/user/{{usernameUpdated}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"user",
+						"{{usernameUpdated}}"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "special-key",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User/LogOut",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Status Code is 200.\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Wait 5 secs before the next try",
+							"(function myLoop(i) {",
+							"    setTimeout(function () {",
+							"        console.log('sleep ' + i);",
+							"        if (--i) myLoop(i);",
+							"    }, 1000)",
+							"})(5); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "special",
+						"value": "key",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseURL}}/user/logout",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"user",
+						"logout"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "special-key",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Status Code is 200.\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"if (pm.response.code == 200) {",
+							"   const jsonData = pm.response.json();",
+							"",
+							"    var jsonDataUser;",
+							"",
+							"    var i;",
+							"",
+							"    if (jsonData.code == \"200\") {",
+							"        jsonDataUser =jsonData;",
+							"    }",
+							"        pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : The user is deleted.\", function () {",
+							"            pm.expect(jsonDataUser).to.have.property(\"message\", pm.environment.get(\"usernameUpdated\"));",
+							"            });",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "special",
+						"value": "key",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseURL}}/user/{{usernameUpdated}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"user",
+						"{{usernameUpdated}}"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "special-key",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseURL",
+			"value": "https://petstore.swagger.io/v2"
+		}
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"id": "39bb2195-acf0-4062-8b3e-0cafdb59f124",
+	"values": [
+		{
+			"key": "filter",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "newToken",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "retries",
+			"value": "",
+			"enabled": true
+		}
+	],
+	"name": "My Workspace Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2021-01-12T12:52:20.379Z",
+	"_postman_exported_using": "Postman/7.36.1"
+}

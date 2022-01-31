@@ -1,0 +1,1061 @@
+{
+	"info": {
+		"_postman_id": "c42e7421-7076-4288-a849-04fff7b53e1f",
+		"name": "22540 - INV - Upload/Delete/Get Attachments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "INV - Post Invoice",
+			"item": [
+				{
+					"name": "Get Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.text();\r",
+									"pm.environment.set(\"IdPToken\", jsonData);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"{{Username}}\",\r\n    \"password\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.{{ENV}}semine.no/api/v1.0/security/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"{{ENV}}semine",
+								"no"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"security",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "INV Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Is Alive\", function () {\r",
+									"    pm.response.to.have.body('Alive!');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"{{Username}}\",\r\n    \"password\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{INV}}/health",
+							"host": [
+								"{{INV}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create An Invoice",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.clear();\r",
+									"\r",
+									"const moment = require(\"moment\");\r",
+									"\r",
+									"pm.collectionVariables.set(\"ic-invoiceNumber\", \"I - \" + moment().format(\"YYYYMMDD-HHmmss\"));\r",
+									"pm.collectionVariables.set(\"organizationId\", \"31a15049-2dbb-4cb1-9e67-03fc30e239fd\");\r",
+									"pm.collectionVariables.set(\"datasetId\", \"ce99176a-545d-43b7-b995-7b16cd8faaf1\");\r",
+									"pm.collectionVariables.set(\"clientId\", pm.collectionVariables.get(\"datasetId\"));\r",
+									"\r",
+									"pm.collectionVariables.set(\"ic-invoiceId\", \"{{$guid}}\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Post Create Invoice - Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Post Create Invoice - Expected to return a invoice guid\", function(){\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    var isGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(jsonData);\r",
+									"    \r",
+									"    pm.expect(isGuid).is.to.equal(true);\r",
+									"    pm.collectionVariables.set('ic-invoiceId', jsonData);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"organizationId\": \"{{organizationId}}\",\n    \"datasetId\": \"{{datasetId}}\",\n    \"supplierId\": null,\n    \"invoiceFlagId\": null,\n    \"supplierIsApproved\": false,\n    \"invoiceNumber\": \"{{ic-invoiceNumber}}\",\n    \"invoiceTypeId\": 1,\n    \"invoiceStatusId\": 6,\n    \"invoiceSourceType\": \"None\",\n    \"documentType\": \"CostInvoice\",\n    \"invoiceDate\": \"2019-08-16T00:00:00\",\n    \"dueDate\": \"2019-09-15T00:00:00\",\n    \"supplierPartyId\": \"d8648a94-af41-4e54-85b2-08d7f1c70146\",\n    \"customerPartyId\": \"2cb41c69-4e12-4d34-85b1-08d7f1c70146\",\n    \"invoiceCurrency\": \"USD\",\n    \"customerReference\": \"\",\n    \"supplierReference\": \"\",\n    \"purchaserName\": \"Kristiansand Dyrepark AS\",\n    \"kidNumber\": \"000490601102125\",\n    \"voucherNumber\": null,\n    \"paymentTerms\": \"\",\n    \"buyerReference\": null,\n    \"buyerContactPerson\": null,\n    \"buyerId\": null,\n    \"project\": null,\n    \"department\": null,\n    \"carPlateNumber\": null,\n    \"orderReference\": null,\n    \"doNotPay\": false,\n    \"supplierNsParameterValueId\": null,\n    \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\n    \"createdDate\": \"2020-05-06T14:08:50.5284176Z\",\n    \"lastModifiedDate\": \"2020-05-06T14:08:51.9485568Z\",\n    \"lastModifiedBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n    \"invoiceChangeLogs\": null,\n    \"invoiceParameterValues\": null,\n    \"invoiceAccesses\": null,\n    \"invoiceComments\": null,\n    \"invoiceActivities\": null,\n    \"invoicePurchaseSummary\": null,\n    \"invoiceLines\": [\n        {\n            \"invoiceId\": \"{{ic-invoiceId}}\",\n            \"lineNumber\": 1,\n            \"invoiceLineNumber\": null,\n            \"referenceLineNumber\": null,\n            \"itemNumber\": \"3000\",\n            \"description\": \"Pris:\",\n            \"quantity\": 1,\n            \"unitPrice\": 2160,\n            \"totalAmount\": 2160,\n            \"discount\": 0,\n            \"vatRate\": 25,\n            \"vatAmount\": 540,\n            \"startPeriod\": null,\n            \"totalPeriod\": null,\n            \"startYear\": null,\n            \"status\": 0,\n            \"text\": null,\n            \"issueDate\": \"0001-01-01T00:00:00\",\n            \"currency\": \"NOK\",\n            \"conversionRate\": 0,\n            \"isGroupingMasterLine\": false,\n            \"parentInvoiceLineId\": null,\n            \"createdBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n            \"createdDate\": \"2020-05-06T14:08:51.9492103Z\",\n            \"lastModifiedDate\": \"2020-05-06T14:08:51.94933Z\",\n            \"lastModifiedBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n            \"accountTypeParameterId\": null,\n            \"accountingParameters\": null,\n            \"invoiceParameterValues\": null,\n            \"invoiceComments\": null,\n            \"assignedUsers\": null,\n            \"parentInvoiceLine\": null,\n            \"childInvoiceLines\": null,\n            \"purchaseOrderNumber\": null,\n            \"purchaseOrderLineNumber\": \"10010000\",\n            \"isDeleted\": false,\n            \"id\": \"{{$guid}}\"\n        }\n    ],\n    \"attachments\": [\n        {\n            \"invoiceId\": \"{{ic-invoiceId}}\",\n            \"isInvoicePdf\": true,\n            \"fileName\": \"5e662efffe47b50001db7c47_1_commercial invoice_49060.pdf\",\n            \"containerName\": \"distributionservice\",\n            \"pageCount\": 1,\n            \"createdBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n            \"createdDate\": \"2020-05-06T14:08:51.9487005Z\",\n            \"lastModifiedDate\": \"2020-05-06T14:08:51.94883Z\",\n            \"lastModifiedBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n            \"blockInfos\": null,\n            \"id\": \"{{$guid}}\"\n        },\n        {\n            \"invoiceId\": \"{{ic-invoiceId}}\",\n            \"isInvoicePdf\": false,\n            \"fileName\": \"5e662efffe47b50001db7c47_ubl.xml\",\n            \"containerName\": \"distributionservice\",\n            \"pageCount\": 1,\n            \"createdBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n            \"createdDate\": \"2020-05-06T14:08:51.9489462Z\",\n            \"lastModifiedDate\": \"2020-05-06T14:08:51.9489548Z\",\n            \"lastModifiedBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n            \"blockInfos\": null,\n            \"id\": \"{{$guid}}\"\n        },\n        {\n            \"invoiceId\": \"{{ic-invoiceId}}\",\n            \"isInvoicePdf\": false,\n            \"fileName\": \"5e662efffe47b50001db7c47_ubl.pdf\",\n            \"containerName\": \"distributionservice\",\n            \"pageCount\": 2,\n            \"createdBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n            \"createdDate\": \"2020-05-06T14:08:51.9489596Z\",\n            \"lastModifiedDate\": \"2020-05-06T14:08:51.9489598Z\",\n            \"lastModifiedBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n            \"blockInfos\": null,\n            \"id\": \"{{$guid}}\"\n        }\n    ],\n    \"taxDetails\": [\n        {\n            \"invoiceId\": \"{{ic-invoiceId}}\",\n            \"currency\": null,\n            \"taxRate\": 0,\n            \"taxAmount\": 1275,\n            \"taxCategory\": null,\n            \"taxExemptionReason\": null,\n            \"taxType\": \"None\",\n            \"id\": \"{{$guid}}\"\n        }\n    ],\n    \"invoiceAmount\": {\n        \"invoiceId\": \"{{ic-invoiceId}}\",\n        \"conversionRate\": 0,\n        \"conversionDate\": \"0001-01-01T00:00:00\",\n        \"totalAmount\": 6375,\n        \"balanceAmount\": 0,\n        \"vatAmount\": 1275,\n        \"accountingLineTotalAmount\": 0,\n        \"accountingLineRemainingTotal\": 0,\n        \"netAmount\": 5100,\n        \"reportingAmount\": 0,\n        \"createdBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n        \"createdDate\": \"2020-05-06T14:08:51.9489608Z\",\n        \"lastModifiedDate\": \"2020-05-06T14:08:51.9490867Z\",\n        \"lastModifiedBy\": \"316acafc-f371-4957-bffe-6c8aaba170ea\",\n        \"id\": \"{{$guid}}\"\n    },\n    \"supplierParty\": {\n        \"name\": \"Xpressprint AS\",\n        \"vatNumber\": \"31a15049-2dbb-4cb1-9e67-03fc30e239fd\",\n        \"organizationNumber\": \"31a15049-2dbb-4cb1-9e67-03fc30e239fd\",\n        \"organizationNumberAuthority\": null,\n        \"phone\": null,\n        \"mobile\": null,\n        \"web\": null,\n        \"street\": \"Henrik Wergelandsgt. 65-67\",\n        \"zip\": \"4614\",\n        \"country\": \"NO\",\n        \"city\": \"KRISTIANSAND S\",\n        \"bankAccountNumber\": \"31262439820\",\n        \"ibanAccountNumber\": null,\n        \"id\": \"{{$guid}}\"\n    },\n    \"customerParty\": {\n        \"name\": \"Kristiansand Dyrepark AS\",\n        \"vatNumber\": null,\n        \"organizationNumber\": \"9201659310\",\n        \"organizationNumberAuthority\": null,\n        \"phone\": null,\n        \"mobile\": null,\n        \"web\": null,\n        \"street\": \"Kardemomme By\",\n        \"zip\": \"4609\",\n        \"country\": \"NO\",\n        \"city\": \"KARDEMOMME BY\",\n        \"bankAccountNumber\": null,\n        \"ibanAccountNumber\": null,\n        \"id\": \"{{$guid}}\"\n    },\n    \"invoiceFlag\": null,\n    \"assignedUsers\": null,\n    \"buyer\": null,\n    \"accountNumber\": null,\n    \"supplier\": null,\n    \"bankAccount\": null,\n    \"invoiceAccountingLines\": null,\n    \"invoiceType\": null,\n    \"purchaseOrderNumber\": null,\n    \"isDeleted\": false,\n    \"invoiceStatus\": null,\n    \"id\": \"{{ic-invoiceId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{INV}}/organizations/{{organizationId}}/datasets/{{datasetId}}/internalinvoices",
+							"host": [
+								"{{INV}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"datasets",
+								"{{datasetId}}",
+								"internalinvoices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Created Invoice with DevExtreme Filter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"invoiceResponse\",JSON.stringify(jsonData));\r",
+									"\r",
+									"pm.test(\"Get Created Invoice - Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Get Created Invoice - Expected invoiceNumber\", function(){\r",
+									"    let invoiceNumber = pm.collectionVariables.get('ic-invoiceNumber');\r",
+									"    console.log({ invoiceNumber, jsonData})\r",
+									"    \r",
+									"    pm.expect(jsonData.data.length).is.to.equal(1);\r",
+									"    \r",
+									"    pm.expect(jsonData.data[0].invoiceNumber).is.to.equal(invoiceNumber);\r",
+									"    \r",
+									"    console.log( \"InvoiceId: \" + pm.collectionVariables.get('ic-invoiceId'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Get Created Invoice - Expected invoiceId\", function(){\r",
+									"    let invoiceId = pm.collectionVariables.get('ic-invoiceId');\r",
+									"    console.log( \"InvoiceId: \" + invoiceId);\r",
+									"    \r",
+									"    pm.expect(invoiceId).is.to.equal(jsonData.data[0].id);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Get Created Invoice - Expected OrganizationId\", function(){\r",
+									"    let organizationId = pm.collectionVariables.get('organizationId');\r",
+									"    console.log( \"OrganizationId: \" + organizationId);\r",
+									"    \r",
+									"    pm.expect(organizationId).is.to.equal(jsonData.data[0].organizationId);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Get Created Invoice - Expected DatasetId/ClientId\", function(){\r",
+									"    let datasetId = pm.collectionVariables.get('datasetId');\r",
+									"    let clientId = pm.collectionVariables.get('clientId');\r",
+									"    console.log( \"DatasetId: \" + datasetId);\r",
+									"    \r",
+									"    pm.expect(datasetId).is.to.equal(jsonData.data[0].clientId);\r",
+									"    pm.expect(clientId).is.to.equal(jsonData.data[0].clientId);\r",
+									"    pm.expect(datasetId).is.to.equal(clientId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{INV}}/organizations/{{organizationId}}/invoices?filter=[\"id\",\"=\",\"{{ic-invoiceId}}\"]",
+							"host": [
+								"{{INV}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"invoices"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "[\"id\",\"=\",\"{{ic-invoiceId}}\"]"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"registrationNumber\": \"<string>\",\n    \"erpId\": \"<string>\",\n    \"erpType\": \"<string>\",\n    \"street\": \"<string>\",\n    \"city\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"email\": \"<string>\",\n    \"countryCode\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"organizationId\": \"<uuid>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1.0/organizations/:organizationId/datasets/:datasetId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"organizations",
+										":organizationId",
+										"datasets",
+										":datasetId"
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "datasetId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"registrationNumber\": \"<string>\",\n    \"erpId\": \"<string>\",\n    \"erpType\": \"<string>\",\n    \"street\": \"<string>\",\n    \"city\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"email\": \"<string>\",\n    \"countryCode\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"organizationId\": \"<uuid>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1.0/organizations/:organizationId/datasets/:datasetId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"organizations",
+										":organizationId",
+										"datasets",
+										":datasetId"
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "datasetId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<uuid>\",\n \"clientName\": \"<string>\",\n \"organizationNumber\": \"<string>\",\n \"erpId\": \"<string>\",\n \"currencyCode\": \"<string>\",\n \"address\": \"<string>\",\n \"zipCode\": \"<string>\",\n \"city\": \"<string>\",\n \"countryCode\": \"<string>\"\n}"
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"registrationNumber\": \"<string>\",\n    \"erpId\": \"<string>\",\n    \"erpType\": \"<string>\",\n    \"street\": \"<string>\",\n    \"city\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"email\": \"<string>\",\n    \"countryCode\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"organizationId\": \"<uuid>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1.0/organizations/:organizationId/datasets/:datasetId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"organizations",
+										":organizationId",
+										"datasets",
+										":datasetId"
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "datasetId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Get Invoice Lines",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Invoice Lines - Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Get Invoice Lines - Expected Invoice Lines\", function(){\r",
+									"    \r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(jsonData.invoiceLines.length).not.equal(0);\r",
+									"    \r",
+									"    pm.collectionVariables.set('ic-invoiceLineId', jsonData.invoiceLines[0].invoiceLineId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{INV}}/organizations/{{organizationId}}/datasets/{{datasetId}}/invoices/{{ic-invoiceId}}/InvoiceLines",
+							"host": [
+								"{{INV}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"datasets",
+								"{{datasetId}}",
+								"invoices",
+								"{{ic-invoiceId}}",
+								"InvoiceLines"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"registrationNumber\": \"<string>\",\n    \"erpId\": \"<string>\",\n    \"erpType\": \"<string>\",\n    \"street\": \"<string>\",\n    \"city\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"email\": \"<string>\",\n    \"countryCode\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"organizationId\": \"<uuid>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1.0/organizations/:organizationId/datasets/:datasetId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"organizations",
+										":organizationId",
+										"datasets",
+										":datasetId"
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "datasetId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"registrationNumber\": \"<string>\",\n    \"erpId\": \"<string>\",\n    \"erpType\": \"<string>\",\n    \"street\": \"<string>\",\n    \"city\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"email\": \"<string>\",\n    \"countryCode\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"organizationId\": \"<uuid>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1.0/organizations/:organizationId/datasets/:datasetId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"organizations",
+										":organizationId",
+										"datasets",
+										":datasetId"
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "datasetId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"registrationNumber\": \"<string>\",\n    \"erpId\": \"<string>\",\n    \"erpType\": \"<string>\",\n    \"street\": \"<string>\",\n    \"city\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"email\": \"<string>\",\n    \"countryCode\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"organizationId\": \"<uuid>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1.0/organizations/:organizationId/datasets/:datasetId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"organizations",
+										":organizationId",
+										"datasets",
+										":datasetId"
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "datasetId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<uuid>\",\n \"clientName\": \"<string>\",\n \"organizationNumber\": \"<string>\",\n \"erpId\": \"<string>\",\n \"currencyCode\": \"<string>\",\n \"address\": \"<string>\",\n \"zipCode\": \"<string>\",\n \"city\": \"<string>\",\n \"countryCode\": \"<string>\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "accessToken",
+						"value": "{{IdPToken}}",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Upload Attachments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Upload attachments - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Upload attachments - Expected Newly created Attachments\", function () {\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.length).not.equal(0);\r",
+							"\r",
+							"    pm.collectionVariables.set('ic-attachmentId', jsonData[0].attachmentId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"contentType": "multipart/form-data",
+							"type": "file",
+							"src": "/C:/Users/Sougata Sarkar/Desktop/Workflow overview.xlsx"
+						},
+						{
+							"key": "files",
+							"contentType": "multipart/form-data",
+							"type": "file",
+							"src": "/C:/Users/Sougata Sarkar/Desktop/Rounding_AL IL Control 26.09.2018.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{INV}}/organizations/{{organizationId}}/datasets/{{datasetId}}/invoices/{{ic-invoiceId}}/attachments",
+					"host": [
+						"{{INV}}"
+					],
+					"path": [
+						"organizations",
+						"{{organizationId}}",
+						"datasets",
+						"{{datasetId}}",
+						"invoices",
+						"{{ic-invoiceId}}",
+						"attachments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activity As AttachmentAdded",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get activity response is not null\", function () {\r",
+							"    pm.expect(jsonData.value).to.not.be.null;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Activity operation type should be AttachmentAdded\", function () {\r",
+							"    pm.expect(jsonData.data.find(jsn => jsn.activityOperationType == 'AttachmentAdded'));\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{INV}}/organizations/{{organizationId}}/datasets/{{datasetId}}/invoices/{{ic-invoiceId}}/activities",
+					"host": [
+						"{{INV}}"
+					],
+					"path": [
+						"organizations",
+						"{{organizationId}}",
+						"datasets",
+						"{{datasetId}}",
+						"invoices",
+						"{{ic-invoiceId}}",
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download Attachment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Download Attachment - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{INV}}/organizations/{{organizationId}}/datasets/{{datasetId}}/invoices/{{ic-invoiceId}}/attachments/{{ic-attachmentId}}",
+					"host": [
+						"{{INV}}"
+					],
+					"path": [
+						"organizations",
+						"{{organizationId}}",
+						"datasets",
+						"{{datasetId}}",
+						"invoices",
+						"{{ic-invoiceId}}",
+						"attachments",
+						"{{ic-attachmentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attachment List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Attachment List - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Attachment List - InvoiceId should be same as Requested InvoiceId\", function () {\r",
+							"    \r",
+							"    pm.expect(jsonData[0].invoiceId).is.to.equal(pm.collectionVariables.get('ic-invoiceId'));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Attachment List - Expected All Attachments Based On InvoiceId\", function () {\r",
+							"\r",
+							"    pm.expect(jsonData.length).not.equal(0);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{INV}}/organizations/{{organizationId}}/datasets/{{datasetId}}/invoices/{{ic-invoiceId}}/attachments",
+					"host": [
+						"{{INV}}"
+					],
+					"path": [
+						"organizations",
+						"{{organizationId}}",
+						"datasets",
+						"{{datasetId}}",
+						"invoices",
+						"{{ic-invoiceId}}",
+						"attachments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Attachment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete Attachment - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{INV}}/organizations/{{organizationId}}/datasets/{{datasetId}}/invoices/{{ic-invoiceId}}/attachments/{{ic-attachmentId}}",
+					"host": [
+						"{{INV}}"
+					],
+					"path": [
+						"organizations",
+						"{{organizationId}}",
+						"datasets",
+						"{{datasetId}}",
+						"invoices",
+						"{{ic-invoiceId}}",
+						"attachments",
+						"{{ic-attachmentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activity As AttachmentDeleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get activity response is not null\", function () {\r",
+							"    pm.expect(jsonData.value).to.not.be.null;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Activity operation type should be AttachmentDeleted\", function () {\r",
+							"    pm.expect(jsonData.data.find(jsn => jsn.activityOperationType == 'AttachmentDeleted'));\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{INV}}/organizations/{{organizationId}}/datasets/{{datasetId}}/invoices/{{ic-invoiceId}}/activities",
+					"host": [
+						"{{INV}}"
+					],
+					"path": [
+						"organizations",
+						"{{organizationId}}",
+						"datasets",
+						"{{datasetId}}",
+						"invoices",
+						"{{ic-invoiceId}}",
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attachment List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Attachment List - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Attachment List - InvoiceId should be same as Requested InvoiceId\", function () {\r",
+							"\r",
+							"    pm.expect(jsonData[0].invoiceId).is.to.equal(pm.collectionVariables.get('ic-invoiceId'));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Attachment List - Expected All Attachments Except Deleted attachment\", function () {\r",
+							"\r",
+							"    pm.expect(jsonData.length).not.equal(0);\r",
+							"    pm.expect(jsonData.attachmentId).not.equal(pm.collectionVariables.get('ic-attachmentId'));\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{INV}}/organizations/{{organizationId}}/datasets/{{datasetId}}/invoices/{{ic-invoiceId}}/attachments",
+					"host": [
+						"{{INV}}"
+					],
+					"path": [
+						"organizations",
+						"{{organizationId}}",
+						"datasets",
+						"{{datasetId}}",
+						"invoices",
+						"{{ic-invoiceId}}",
+						"attachments"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessToken",
+				"value": "{{IdPToken}}",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "3aa157ec-6d6b-44f9-8e8c-e5eb61483377",
+			"key": "clientId",
+			"value": "ce99176a-545d-43b7-b995-7b16cd8faaf1",
+			"type": "string"
+		},
+		{
+			"id": "32af5ca1-07a4-414d-9caf-9462c5461f67",
+			"key": "datasetId",
+			"value": "ce99176a-545d-43b7-b995-7b16cd8faaf1",
+			"type": "string"
+		},
+		{
+			"id": "4ce130d3-5b51-4e24-955b-696a5465b737",
+			"key": "ic-invoiceId",
+			"value": "dd346678-9905-4f95-a7a3-6b04c7684772",
+			"type": "string"
+		},
+		{
+			"id": "b9761d33-edb3-4299-b645-2f5f7dd92d4d",
+			"key": "ic-invoiceNumber",
+			"value": "I - 20200515-162422",
+			"type": "string"
+		},
+		{
+			"id": "fb690581-78fb-41c5-9136-6725dfea0cbf",
+			"key": "organizationId",
+			"value": "31a15049-2dbb-4cb1-9e67-03fc30e239fd",
+			"type": "string"
+		},
+		{
+			"id": "e4ad5261-9f44-490f-ae26-53f2e244352e",
+			"key": "invoiceResponse",
+			"value": "{\"data\":[{\"id\":\"dd346678-9905-4f95-a7a3-6b04c7684772\",\"organizationId\":\"31a15049-2dbb-4cb1-9e67-03fc30e239fd\",\"clientId\":\"ce99176a-545d-43b7-b995-7b16cd8faaf1\",\"issueDate\":\"2020-05-06T14:08:50.5284176Z\",\"dueDate\":\"2019-09-14T22:00:00Z\",\"erpVendor\":{\"id\":\"\",\"name\":null,\"erpVendorId\":null,\"bankAccount\":null},\"type\":\"Invoice\",\"invoiceNumber\":\"I - 20200515-162422\",\"amount\":6375,\"vatAmount\":1275,\"accounted\":6375,\"balance\":0,\"buyerRef\":{\"userId\":null,\"userName\":null,\"email\":null},\"status\":\"New\",\"workflows\":[],\"assigned\":{\"users\":[]},\"pending\":null,\"invoiceCurrency\":\"USD\",\"supplier\":{\"id\":null,\"name\":null},\"latestActivity\":{\"userName\":null,\"activityDate\":null},\"latestComment\":{\"userName\":null,\"comment\":null},\"capturedFrom\":{\"iconType\":0,\"amount\":0},\"accounts\":{\"details\":[]},\"flag\":{\"id\":null,\"color\":null,\"description\":null},\"clientName\":\"Dyreparken Overnatting AS\",\"exchangeRate\":0,\"invoiceSubType\":\"CostInvoice\",\"purchaseOrderNumber\":null}]}",
+			"type": "string"
+		},
+		{
+			"id": "38581fdb-4ada-47ab-b98f-28e2bc28e60a",
+			"key": "ic-invoiceLineId",
+			"value": "5f7c7b9f-3c20-4721-b6e8-4c6c22a5a530",
+			"type": "string"
+		},
+		{
+			"id": "841c5e97-704c-49b2-bf30-a3d124758815",
+			"key": "ic-attachmentId",
+			"value": "23605dae-96ef-4d67-6c89-08d7f8dbae31",
+			"type": "string"
+		}
+	]
+}

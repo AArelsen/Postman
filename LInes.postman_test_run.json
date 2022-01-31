@@ -1,0 +1,1103 @@
+{
+	"id": "60e16fc8-6ffe-44f6-8640-c85039535321",
+	"name": "LInes",
+	"timestamp": "2021-02-09T19:02:13.536Z",
+	"collection_id": "4b098e4c-59ed-4de3-827d-01def9302237",
+	"folder_id": 0,
+	"environment_id": "f35fbfca-4287-4d73-8c7d-aaa190ef1def",
+	"totalPass": 117,
+	"totalFail": 15,
+	"results": [
+		{
+			"id": "e1217a21-6252-42c5-80fe-406b269660c0",
+			"name": "IDP /connect/token INT - Try Init",
+			"url": "https://login.testsemine.no/connect/token",
+			"time": 227,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST POST IDP /connect/token INT - Try Init : 200": true
+			},
+			"testPassFailCounts": {
+				"TEST POST IDP /connect/token INT - Try Init : 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				227
+			],
+			"allTests": [
+				{
+					"TEST POST IDP /connect/token INT - Try Init : 200": true
+				}
+			]
+		},
+		{
+			"id": "9db45a4f-6573-45b9-b202-855ec636ec2a",
+			"name": "IDP /connect/token PWA - Try Init",
+			"url": "https://login.testsemine.no/connect/token",
+			"time": 169,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST POST IDP /connect/token PWA - Try Init : 200": true
+			},
+			"testPassFailCounts": {
+				"TEST POST IDP /connect/token PWA - Try Init : 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				169
+			],
+			"allTests": [
+				{
+					"TEST POST IDP /connect/token PWA - Try Init : 200": true
+				}
+			]
+		},
+		{
+			"id": "2bc2bef2-3ce9-432c-bb36-6ac7a737618f",
+			"name": "INT clients/ID/accountingcodes makeAccount",
+			"time": 147,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST POST INT clients/ID/accountingcodes makeAccount : 200": true
+			},
+			"testPassFailCounts": {
+				"TEST POST INT clients/ID/accountingcodes makeAccount : 200": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				395,
+				174,
+				156,
+				136,
+				147
+			],
+			"allTests": [
+				{
+					"TEST POST INT clients/ID/accountingcodes makeAccount : 200": true
+				},
+				{
+					"TEST POST INT clients/ID/accountingcodes makeAccount : 200": true
+				},
+				{
+					"TEST POST INT clients/ID/accountingcodes makeAccount : 200": true
+				},
+				{
+					"TEST POST INT clients/ID/accountingcodes makeAccount : 200": true
+				},
+				{
+					"TEST POST INT clients/ID/accountingcodes makeAccount : 200": true
+				}
+			]
+		},
+		{
+			"id": "e0096bd8-eec0-4517-ae2b-0aef759f1921",
+			"name": "PWA /invoiceLines/ID 1 - makeLIne",
+			"time": 136,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST POST PWA /invoiceLines/ID 1 - makeLIne : 200": true,
+				"TEST POST PWA /invoiceLines/ID 1 - makeLIne : Line number is correct.": true
+			},
+			"testPassFailCounts": {
+				"TEST POST PWA /invoiceLines/ID 1 - makeLIne : 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST POST PWA /invoiceLines/ID 1 - makeLIne : Line number is correct.": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				277,
+				148,
+				130,
+				153,
+				136
+			],
+			"allTests": [
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeLIne : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeLIne : Line number is correct.": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeLIne : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeLIne : Line number is correct.": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeLIne : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeLIne : Line number is correct.": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeLIne : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeLIne : Line number is correct.": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeLIne : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeLIne : Line number is correct.": true
+				}
+			]
+		},
+		{
+			"id": "9a1c6c89-8d32-4a33-b679-4e8142a1e2fd",
+			"name": "PWA /invoiceLines/ID 1 - makeSplit",
+			"time": 140,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST POST PWA /invoiceLines/ID 1 - makeSplit : 200": true,
+				"TEST POST PWA /invoiceLines/ID 1 - makeSplit : Line number is correct.": true
+			},
+			"testPassFailCounts": {
+				"TEST POST PWA /invoiceLines/ID 1 - makeSplit : 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST POST PWA /invoiceLines/ID 1 - makeSplit : Line number is correct.": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				215,
+				141,
+				151,
+				147,
+				140
+			],
+			"allTests": [
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeSplit : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeSplit : Line number is correct.": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeSplit : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeSplit : Line number is correct.": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeSplit : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeSplit : Line number is correct.": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeSplit : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeSplit : Line number is correct.": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeSplit : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeSplit : Line number is correct.": true
+				}
+			]
+		},
+		{
+			"id": "aa7be5ea-e5bc-48de-878d-62360e5aed3a",
+			"name": "PWA /invoiceLines/ID 1 - makeCopy",
+			"time": 132,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST POST PWA /invoiceLines/ID 1 - makeCopy : 200": true,
+				"TEST POST PWA /invoiceLines/ID 1 - makeCopy : Line number is correct:": true
+			},
+			"testPassFailCounts": {
+				"TEST POST PWA /invoiceLines/ID 1 - makeCopy : 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST POST PWA /invoiceLines/ID 1 - makeCopy : Line number is correct:": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				142,
+				130,
+				156,
+				137,
+				132
+			],
+			"allTests": [
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeCopy : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeCopy : Line number is correct:": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeCopy : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeCopy : Line number is correct:": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeCopy : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeCopy : Line number is correct:": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeCopy : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeCopy : Line number is correct:": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeCopy : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - makeCopy : Line number is correct:": true
+				}
+			]
+		},
+		{
+			"id": "3e8ee4e7-195a-495e-ad82-a098136eaebc",
+			"name": "PWA /invoiceLines/ID 1 - makeGenerate",
+			"time": 120,
+			"responseCode": {
+				"code": 409,
+				"name": "Conflict"
+			},
+			"tests": {
+				"TEST POST PWA /invoiceLines/ID 1 - makeGenerate : 409": true
+			},
+			"testPassFailCounts": {
+				"TEST POST PWA /invoiceLines/ID 1 - makeGenerate : 409": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				171,
+				137,
+				351,
+				89,
+				120
+			],
+			"allTests": [
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeGenerate : 409": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeGenerate : 409": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeGenerate : 409": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeGenerate : 409": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - makeGenerate : 409": true
+				}
+			]
+		},
+		{
+			"id": "7f188d7d-8c0a-4e67-88cd-15c923e6f84e",
+			"name": "PWA /invoiceLines/ID 1 - XLS_Exporter",
+			"time": 1262,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : 200": true,
+				"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : XLSX received": false
+			},
+			"testPassFailCounts": {
+				"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : XLSX received": {
+					"pass": 0,
+					"fail": 5
+				}
+			},
+			"times": [
+				412,
+				281,
+				335,
+				273,
+				1262
+			],
+			"allTests": [
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : XLSX received": false
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : XLSX received": false
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : XLSX received": false
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : XLSX received": false
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : 200": true,
+					"TEST POST PWA /invoiceLines/ID 1 - XLS_Exporter : XLSX received": false
+				}
+			]
+		},
+		{
+			"id": "930a187b-32b2-47e2-b0ae-03a2ff7d5d5a",
+			"name": "PWA /invoiceLines/ID 1 -linesGroups",
+			"time": 359,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"TEST POST PWA /invoiceLines/ID 1 -linesGroups : 201": true
+			},
+			"testPassFailCounts": {
+				"TEST POST PWA /invoiceLines/ID 1 -linesGroups : 201": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				428,
+				294,
+				284,
+				308,
+				359
+			],
+			"allTests": [
+				{
+					"TEST POST PWA /invoiceLines/ID 1 -linesGroups : 201": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 -linesGroups : 201": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 -linesGroups : 201": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 -linesGroups : 201": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 -linesGroups : 201": true
+				}
+			]
+		},
+		{
+			"id": "c8aae96c-13fd-49f2-8c5b-409e2a89b34b",
+			"name": "PWA /invoiceLines/ID 1 -seeGroups",
+			"time": 254,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST GET PWA /invoiceLines/ID 1 -seeGroups : 200": true,
+				"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Groups Found": true,
+				"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Period was found": true,
+				"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Amounts are correct": false
+			},
+			"testPassFailCounts": {
+				"TEST GET PWA /invoiceLines/ID 1 -seeGroups : 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Groups Found": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Period was found": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Amounts are correct": {
+					"pass": 0,
+					"fail": 5
+				}
+			},
+			"times": [
+				237,
+				239,
+				243,
+				301,
+				254
+			],
+			"allTests": [
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Groups Found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Amounts are correct": false
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Groups Found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Amounts are correct": false
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Groups Found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Amounts are correct": false
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Groups Found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Amounts are correct": false
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Groups Found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeGroups : Amounts are correct": false
+				}
+			]
+		},
+		{
+			"id": "847a4a1a-46b4-463c-8ea2-753146e74ed5",
+			"name": "PWA /invoiceLines/ID 1 -splitGroups",
+			"time": 378,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST DELETE PWA /invoiceLines/ID 1 -splitGroups : 200": true
+			},
+			"testPassFailCounts": {
+				"TEST DELETE PWA /invoiceLines/ID 1 -splitGroups : 200": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				285,
+				282,
+				275,
+				292,
+				378
+			],
+			"allTests": [
+				{
+					"TEST DELETE PWA /invoiceLines/ID 1 -splitGroups : 200": true
+				},
+				{
+					"TEST DELETE PWA /invoiceLines/ID 1 -splitGroups : 200": true
+				},
+				{
+					"TEST DELETE PWA /invoiceLines/ID 1 -splitGroups : 200": true
+				},
+				{
+					"TEST DELETE PWA /invoiceLines/ID 1 -splitGroups : 200": true
+				},
+				{
+					"TEST DELETE PWA /invoiceLines/ID 1 -splitGroups : 200": true
+				}
+			]
+		},
+		{
+			"id": "7e328b17-bff9-490d-9684-1390e58b5d3b",
+			"name": "PWA /invoiceLines/ID 1 -seeLine",
+			"time": 269,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST GET PWA /invoiceLines/ID 1 -seeLine : 200": true,
+				"TEST GET PWA /invoiceLines/ID 1 -seeLine : Period was found": true,
+				"TEST GET PWA /invoiceLines/ID 1 -seeLine : Amounts are correct": false
+			},
+			"testPassFailCounts": {
+				"TEST GET PWA /invoiceLines/ID 1 -seeLine : 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST GET PWA /invoiceLines/ID 1 -seeLine : Period was found": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST GET PWA /invoiceLines/ID 1 -seeLine : Amounts are correct": {
+					"pass": 0,
+					"fail": 5
+				}
+			},
+			"times": [
+				259,
+				263,
+				243,
+				247,
+				269
+			],
+			"allTests": [
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : Amounts are correct": false
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : Amounts are correct": false
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : Amounts are correct": false
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : Amounts are correct": false
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeLine : Amounts are correct": false
+				}
+			]
+		},
+		{
+			"id": "c330cc83-eb4d-42ce-8bcf-d5642bc8df30",
+			"name": "PWA /values/condensed 1 Ledger",
+			"time": 62,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST GET PWA /values/condensed 1 Ledger : 200": true
+			},
+			"testPassFailCounts": {
+				"TEST GET PWA /values/condensed 1 Ledger : 200": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				70,
+				57,
+				60,
+				66,
+				62
+			],
+			"allTests": [
+				{
+					"TEST GET PWA /values/condensed 1 Ledger : 200": true
+				},
+				{
+					"TEST GET PWA /values/condensed 1 Ledger : 200": true
+				},
+				{
+					"TEST GET PWA /values/condensed 1 Ledger : 200": true
+				},
+				{
+					"TEST GET PWA /values/condensed 1 Ledger : 200": true
+				},
+				{
+					"TEST GET PWA /values/condensed 1 Ledger : 200": true
+				}
+			]
+		},
+		{
+			"id": "64def82f-58a1-4440-96f7-26cba4c70102",
+			"name": "PWA /invoiceLines/ID 1 -putAccount",
+			"time": 132,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				183,
+				149,
+				147,
+				132,
+				132
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"id": "0ac7b94d-ec41-48b7-932b-2ce4bb85b773",
+			"name": "PWA /invoiceLines/ID 1 -seeChanging",
+			"time": 82,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST GET PWA /invoiceLines/ID 1 -seeChanging : 200": true,
+				"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Period was found": true,
+				"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Amounts are correct": true
+			},
+			"testPassFailCounts": {
+				"TEST GET PWA /invoiceLines/ID 1 -seeChanging : 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Period was found": {
+					"pass": 5,
+					"fail": 0
+				},
+				"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Amounts are correct": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				81,
+				81,
+				80,
+				75,
+				82
+			],
+			"allTests": [
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Amounts are correct": true
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Amounts are correct": true
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Amounts are correct": true
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Amounts are correct": true
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : 200": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Period was found": true,
+					"TEST GET PWA /invoiceLines/ID 1 -seeChanging : Amounts are correct": true
+				}
+			]
+		},
+		{
+			"id": "eb853838-76f7-4616-b908-84c311ff0fa5",
+			"name": "PWA /invoiceLines/ID 1 -deleteLine-1,-2,-3",
+			"time": 347,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST POST PWA /invoiceLines/ID 1 -deleteLine-1,-2,-3 : 200": true
+			},
+			"testPassFailCounts": {
+				"TEST POST PWA /invoiceLines/ID 1 -deleteLine-1,-2,-3 : 200": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				295,
+				338,
+				374,
+				307,
+				347
+			],
+			"allTests": [
+				{
+					"TEST POST PWA /invoiceLines/ID 1 -deleteLine-1,-2,-3 : 200": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 -deleteLine-1,-2,-3 : 200": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 -deleteLine-1,-2,-3 : 200": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 -deleteLine-1,-2,-3 : 200": true
+				},
+				{
+					"TEST POST PWA /invoiceLines/ID 1 -deleteLine-1,-2,-3 : 200": true
+				}
+			]
+		},
+		{
+			"id": "7801af6b-d9c0-4e5d-9e70-4d5900ccfb1a",
+			"name": "PWA /invoiceLines/ID 1 -checkDelete",
+			"time": 272,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"TEST GET PWA /invoiceLines/ID 1 -checkDelete : 200": true
+			},
+			"testPassFailCounts": {
+				"TEST GET PWA /invoiceLines/ID 1 -checkDelete : 200": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				350,
+				356,
+				257,
+				254,
+				272
+			],
+			"allTests": [
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -checkDelete : 200": true
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -checkDelete : 200": true
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -checkDelete : 200": true
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -checkDelete : 200": true
+				},
+				{
+					"TEST GET PWA /invoiceLines/ID 1 -checkDelete : 200": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 17517,
+	"collection": {
+		"requests": [
+			{
+				"id": "e1217a21-6252-42c5-80fe-406b269660c0",
+				"method": "POST"
+			},
+			{
+				"id": "9db45a4f-6573-45b9-b202-855ec636ec2a",
+				"method": "POST"
+			},
+			{
+				"id": "2bc2bef2-3ce9-432c-bb36-6ac7a737618f",
+				"method": "POST"
+			},
+			{
+				"id": "e0096bd8-eec0-4517-ae2b-0aef759f1921",
+				"method": "POST"
+			},
+			{
+				"id": "9a1c6c89-8d32-4a33-b679-4e8142a1e2fd",
+				"method": "POST"
+			},
+			{
+				"id": "aa7be5ea-e5bc-48de-878d-62360e5aed3a",
+				"method": "POST"
+			},
+			{
+				"id": "3e8ee4e7-195a-495e-ad82-a098136eaebc",
+				"method": "POST"
+			},
+			{
+				"id": "7f188d7d-8c0a-4e67-88cd-15c923e6f84e",
+				"method": "POST"
+			},
+			{
+				"id": "930a187b-32b2-47e2-b0ae-03a2ff7d5d5a",
+				"method": "POST"
+			},
+			{
+				"id": "c8aae96c-13fd-49f2-8c5b-409e2a89b34b",
+				"method": "GET"
+			},
+			{
+				"id": "847a4a1a-46b4-463c-8ea2-753146e74ed5",
+				"method": "DELETE"
+			},
+			{
+				"id": "7e328b17-bff9-490d-9684-1390e58b5d3b",
+				"method": "GET"
+			},
+			{
+				"id": "c330cc83-eb4d-42ce-8bcf-d5642bc8df30",
+				"method": "GET"
+			},
+			{
+				"id": "64def82f-58a1-4440-96f7-26cba4c70102",
+				"method": "PUT"
+			},
+			{
+				"id": "0ac7b94d-ec41-48b7-932b-2ce4bb85b773",
+				"method": "GET"
+			},
+			{
+				"id": "eb853838-76f7-4616-b908-84c311ff0fa5",
+				"method": "POST"
+			},
+			{
+				"id": "7801af6b-d9c0-4e5d-9e70-4d5900ccfb1a",
+				"method": "GET"
+			},
+			{
+				"id": "2bc2bef2-3ce9-432c-bb36-6ac7a737618f",
+				"method": "POST"
+			},
+			{
+				"id": "e0096bd8-eec0-4517-ae2b-0aef759f1921",
+				"method": "POST"
+			},
+			{
+				"id": "9a1c6c89-8d32-4a33-b679-4e8142a1e2fd",
+				"method": "POST"
+			},
+			{
+				"id": "aa7be5ea-e5bc-48de-878d-62360e5aed3a",
+				"method": "POST"
+			},
+			{
+				"id": "3e8ee4e7-195a-495e-ad82-a098136eaebc",
+				"method": "POST"
+			},
+			{
+				"id": "7f188d7d-8c0a-4e67-88cd-15c923e6f84e",
+				"method": "POST"
+			},
+			{
+				"id": "930a187b-32b2-47e2-b0ae-03a2ff7d5d5a",
+				"method": "POST"
+			},
+			{
+				"id": "c8aae96c-13fd-49f2-8c5b-409e2a89b34b",
+				"method": "GET"
+			},
+			{
+				"id": "847a4a1a-46b4-463c-8ea2-753146e74ed5",
+				"method": "DELETE"
+			},
+			{
+				"id": "7e328b17-bff9-490d-9684-1390e58b5d3b",
+				"method": "GET"
+			},
+			{
+				"id": "c330cc83-eb4d-42ce-8bcf-d5642bc8df30",
+				"method": "GET"
+			},
+			{
+				"id": "64def82f-58a1-4440-96f7-26cba4c70102",
+				"method": "PUT"
+			},
+			{
+				"id": "0ac7b94d-ec41-48b7-932b-2ce4bb85b773",
+				"method": "GET"
+			},
+			{
+				"id": "eb853838-76f7-4616-b908-84c311ff0fa5",
+				"method": "POST"
+			},
+			{
+				"id": "7801af6b-d9c0-4e5d-9e70-4d5900ccfb1a",
+				"method": "GET"
+			},
+			{
+				"id": "2bc2bef2-3ce9-432c-bb36-6ac7a737618f",
+				"method": "POST"
+			},
+			{
+				"id": "e0096bd8-eec0-4517-ae2b-0aef759f1921",
+				"method": "POST"
+			},
+			{
+				"id": "9a1c6c89-8d32-4a33-b679-4e8142a1e2fd",
+				"method": "POST"
+			},
+			{
+				"id": "aa7be5ea-e5bc-48de-878d-62360e5aed3a",
+				"method": "POST"
+			},
+			{
+				"id": "3e8ee4e7-195a-495e-ad82-a098136eaebc",
+				"method": "POST"
+			},
+			{
+				"id": "7f188d7d-8c0a-4e67-88cd-15c923e6f84e",
+				"method": "POST"
+			},
+			{
+				"id": "930a187b-32b2-47e2-b0ae-03a2ff7d5d5a",
+				"method": "POST"
+			},
+			{
+				"id": "c8aae96c-13fd-49f2-8c5b-409e2a89b34b",
+				"method": "GET"
+			},
+			{
+				"id": "847a4a1a-46b4-463c-8ea2-753146e74ed5",
+				"method": "DELETE"
+			},
+			{
+				"id": "7e328b17-bff9-490d-9684-1390e58b5d3b",
+				"method": "GET"
+			},
+			{
+				"id": "c330cc83-eb4d-42ce-8bcf-d5642bc8df30",
+				"method": "GET"
+			},
+			{
+				"id": "64def82f-58a1-4440-96f7-26cba4c70102",
+				"method": "PUT"
+			},
+			{
+				"id": "0ac7b94d-ec41-48b7-932b-2ce4bb85b773",
+				"method": "GET"
+			},
+			{
+				"id": "eb853838-76f7-4616-b908-84c311ff0fa5",
+				"method": "POST"
+			},
+			{
+				"id": "7801af6b-d9c0-4e5d-9e70-4d5900ccfb1a",
+				"method": "GET"
+			},
+			{
+				"id": "2bc2bef2-3ce9-432c-bb36-6ac7a737618f",
+				"method": "POST"
+			},
+			{
+				"id": "e0096bd8-eec0-4517-ae2b-0aef759f1921",
+				"method": "POST"
+			},
+			{
+				"id": "9a1c6c89-8d32-4a33-b679-4e8142a1e2fd",
+				"method": "POST"
+			},
+			{
+				"id": "aa7be5ea-e5bc-48de-878d-62360e5aed3a",
+				"method": "POST"
+			},
+			{
+				"id": "3e8ee4e7-195a-495e-ad82-a098136eaebc",
+				"method": "POST"
+			},
+			{
+				"id": "7f188d7d-8c0a-4e67-88cd-15c923e6f84e",
+				"method": "POST"
+			},
+			{
+				"id": "930a187b-32b2-47e2-b0ae-03a2ff7d5d5a",
+				"method": "POST"
+			},
+			{
+				"id": "c8aae96c-13fd-49f2-8c5b-409e2a89b34b",
+				"method": "GET"
+			},
+			{
+				"id": "847a4a1a-46b4-463c-8ea2-753146e74ed5",
+				"method": "DELETE"
+			},
+			{
+				"id": "7e328b17-bff9-490d-9684-1390e58b5d3b",
+				"method": "GET"
+			},
+			{
+				"id": "c330cc83-eb4d-42ce-8bcf-d5642bc8df30",
+				"method": "GET"
+			},
+			{
+				"id": "64def82f-58a1-4440-96f7-26cba4c70102",
+				"method": "PUT"
+			},
+			{
+				"id": "0ac7b94d-ec41-48b7-932b-2ce4bb85b773",
+				"method": "GET"
+			},
+			{
+				"id": "eb853838-76f7-4616-b908-84c311ff0fa5",
+				"method": "POST"
+			},
+			{
+				"id": "7801af6b-d9c0-4e5d-9e70-4d5900ccfb1a",
+				"method": "GET"
+			},
+			{
+				"id": "2bc2bef2-3ce9-432c-bb36-6ac7a737618f",
+				"method": "POST"
+			},
+			{
+				"id": "e0096bd8-eec0-4517-ae2b-0aef759f1921",
+				"method": "POST"
+			},
+			{
+				"id": "9a1c6c89-8d32-4a33-b679-4e8142a1e2fd",
+				"method": "POST"
+			},
+			{
+				"id": "aa7be5ea-e5bc-48de-878d-62360e5aed3a",
+				"method": "POST"
+			},
+			{
+				"id": "3e8ee4e7-195a-495e-ad82-a098136eaebc",
+				"method": "POST"
+			},
+			{
+				"id": "7f188d7d-8c0a-4e67-88cd-15c923e6f84e",
+				"method": "POST"
+			},
+			{
+				"id": "930a187b-32b2-47e2-b0ae-03a2ff7d5d5a",
+				"method": "POST"
+			},
+			{
+				"id": "c8aae96c-13fd-49f2-8c5b-409e2a89b34b",
+				"method": "GET"
+			},
+			{
+				"id": "847a4a1a-46b4-463c-8ea2-753146e74ed5",
+				"method": "DELETE"
+			},
+			{
+				"id": "7e328b17-bff9-490d-9684-1390e58b5d3b",
+				"method": "GET"
+			},
+			{
+				"id": "c330cc83-eb4d-42ce-8bcf-d5642bc8df30",
+				"method": "GET"
+			},
+			{
+				"id": "64def82f-58a1-4440-96f7-26cba4c70102",
+				"method": "PUT"
+			},
+			{
+				"id": "0ac7b94d-ec41-48b7-932b-2ce4bb85b773",
+				"method": "GET"
+			},
+			{
+				"id": "eb853838-76f7-4616-b908-84c311ff0fa5",
+				"method": "POST"
+			},
+			{
+				"id": "7801af6b-d9c0-4e5d-9e70-4d5900ccfb1a",
+				"method": "GET"
+			}
+		]
+	}
+}

@@ -1,0 +1,2006 @@
+{
+	"info": {
+		"_postman_id": "aff3f285-03cd-4abc-852a-acebbeb48c3b",
+		"name": "Organization",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "IDP /connect/token {{UserIntegration}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"Token\", pm.response.json().access_token);\r",
+									"\r",
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{Oauth2ClientId}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{Oauth2ClientSecret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "{{ScopeIntegration}}",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "{{UserIntegration}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{PassIntegration}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{IDP}}/connect/token",
+							"host": [
+								"{{IDP}}"
+							],
+							"path": [
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Organization--1",
+			"item": [
+				{
+					"name": "PWA /organizations/ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"console.log(pm.response.json());\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/flags",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"flags"
+							],
+							"query": [
+								{
+									"key": "skip",
+									"value": "1",
+									"description": "Skip records",
+									"disabled": true
+								},
+								{
+									"key": "take",
+									"value": "2",
+									"description": "Take records",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets a supplier for a given client."
+					},
+					"response": [
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<uuid>\",\n \"erpVendorId\": \"<string>\",\n \"bankAccounts\": [\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  },\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  }\n ],\n \"name\": \"<string>\",\n \"country\": \"<string>\",\n \"city\": \"<string>\",\n \"street\": \"<string>\",\n \"zip\": \"<string>\",\n \"vatId\": \"<string>\",\n \"phone\": \"<string>\",\n \"email\": \"<string>\",\n \"organizationAuthorityCode\": \"<string>\",\n \"status\": \"<string>\",\n \"organizationId\": \"<uuid>\",\n \"datasetId\": \"<uuid>\",\n \"nsAccount\": \"<uuid>\",\n \"nsAccountParameterValueDbId\": \"<uuid>\",\n \"nsAccountParameterValue\": {\n  \"id\": \"<uuid>\",\n  \"parameterValueReferenceId\": \"<uuid>\",\n  \"parameterReferenceId\": \"<uuid>\",\n  \"parameterTypeId\": \"<uuid>\",\n  \"parameterTypeCode\": \"<string>\",\n  \"organizationId\": \"<uuid>\",\n  \"datasetId\": \"<uuid>\",\n  \"code\": \"<string>\",\n  \"status\": \"<string>\",\n  \"languageDescriptions\": [\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   }\n  ],\n  \"suppliers\": [\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   }\n  ],\n  \"createdDate\": \"<dateTime>\",\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedBy\": \"<string>\"\n },\n \"parameterValueId\": \"<uuid>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "PWA /organizatios/ID - createNew",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"console.log(pm.response.json());\r",
+									"\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"flagId\", jsonData.id);\r",
+									"pm.environment.set(\"flagColor\", jsonData.color);\r",
+									"pm.environment.set(\"orgId\", jsonData.organizationId);\r",
+									"pm.environment.set(\"cltId\", jsonData.clientId);\r",
+									"pm.environment.set(\"des\", jsonData.description);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment = require(\"moment\");",
+									"",
+									"pm.environment.set(\"greenFlag\", \"#00\" + moment().format(\"mmss\"));",
+									"",
+									"pm.environment.set(\"desFlag\", \"greenFlag--\" + moment().format(\"YYMMDD-mmss\") + \" is OK\");",
+									"",
+									"",
+									"",
+									"",
+									"//pm.environment.set(\"flagId\",\"fb13d581-127c-44be-aa88-08d8a89d7ff7\"); ",
+									"",
+									"//environment variable flagId ",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"{{desFlag}}\",\n    \"color\": \"{{greenFlag}}\",\n    \"active\": false\n}\n//flagName-20200107-134422",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/flags",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"flags"
+							],
+							"query": [
+								{
+									"key": "skip",
+									"value": "1",
+									"description": "Skip records",
+									"disabled": true
+								},
+								{
+									"key": "take",
+									"value": "2",
+									"description": "Take records",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets a supplier for a given client."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<uuid>\",\n \"erpVendorId\": \"<string>\",\n \"bankAccounts\": [\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  },\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  }\n ],\n \"name\": \"<string>\",\n \"country\": \"<string>\",\n \"city\": \"<string>\",\n \"street\": \"<string>\",\n \"zip\": \"<string>\",\n \"vatId\": \"<string>\",\n \"phone\": \"<string>\",\n \"email\": \"<string>\",\n \"organizationAuthorityCode\": \"<string>\",\n \"status\": \"<string>\",\n \"organizationId\": \"<uuid>\",\n \"datasetId\": \"<uuid>\",\n \"nsAccount\": \"<uuid>\",\n \"nsAccountParameterValueDbId\": \"<uuid>\",\n \"nsAccountParameterValue\": {\n  \"id\": \"<uuid>\",\n  \"parameterValueReferenceId\": \"<uuid>\",\n  \"parameterReferenceId\": \"<uuid>\",\n  \"parameterTypeId\": \"<uuid>\",\n  \"parameterTypeCode\": \"<string>\",\n  \"organizationId\": \"<uuid>\",\n  \"datasetId\": \"<uuid>\",\n  \"code\": \"<string>\",\n  \"status\": \"<string>\",\n  \"languageDescriptions\": [\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   }\n  ],\n  \"suppliers\": [\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   }\n  ],\n  \"createdDate\": \"<dateTime>\",\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedBy\": \"<string>\"\n },\n \"parameterValueId\": \"<uuid>\"\n}"
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "PWA /clients/ID/flags/ID -isCreated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"console.log(pm.response.json());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/flags/{{flagId}}",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"flags",
+								"{{flagId}}"
+							]
+						},
+						"description": "Gets a supplier for a given client."
+					},
+					"response": [
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<uuid>\",\n \"erpVendorId\": \"<string>\",\n \"bankAccounts\": [\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  },\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  }\n ],\n \"name\": \"<string>\",\n \"country\": \"<string>\",\n \"city\": \"<string>\",\n \"street\": \"<string>\",\n \"zip\": \"<string>\",\n \"vatId\": \"<string>\",\n \"phone\": \"<string>\",\n \"email\": \"<string>\",\n \"organizationAuthorityCode\": \"<string>\",\n \"status\": \"<string>\",\n \"organizationId\": \"<uuid>\",\n \"datasetId\": \"<uuid>\",\n \"nsAccount\": \"<uuid>\",\n \"nsAccountParameterValueDbId\": \"<uuid>\",\n \"nsAccountParameterValue\": {\n  \"id\": \"<uuid>\",\n  \"parameterValueReferenceId\": \"<uuid>\",\n  \"parameterReferenceId\": \"<uuid>\",\n  \"parameterTypeId\": \"<uuid>\",\n  \"parameterTypeCode\": \"<string>\",\n  \"organizationId\": \"<uuid>\",\n  \"datasetId\": \"<uuid>\",\n  \"code\": \"<string>\",\n  \"status\": \"<string>\",\n  \"languageDescriptions\": [\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   }\n  ],\n  \"suppliers\": [\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   }\n  ],\n  \"createdDate\": \"<dateTime>\",\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedBy\": \"<string>\"\n },\n \"parameterValueId\": \"<uuid>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "PWA /clients/ID/flags/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : description\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[0].description).to.eql(pm.environment.get(\"desFlag\"));\r",
+									"});\r",
+									"  console.log(\"description : \" + pm.environment.get(\"desFlag\"));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/flags/search?query={{desFlag}}",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"flags",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "{{desFlag}}"
+								}
+							]
+						},
+						"description": "Gets a supplier for a given client."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<uuid>\",\n \"erpVendorId\": \"<string>\",\n \"bankAccounts\": [\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  },\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  }\n ],\n \"name\": \"<string>\",\n \"country\": \"<string>\",\n \"city\": \"<string>\",\n \"street\": \"<string>\",\n \"zip\": \"<string>\",\n \"vatId\": \"<string>\",\n \"phone\": \"<string>\",\n \"email\": \"<string>\",\n \"organizationAuthorityCode\": \"<string>\",\n \"status\": \"<string>\",\n \"organizationId\": \"<uuid>\",\n \"datasetId\": \"<uuid>\",\n \"nsAccount\": \"<uuid>\",\n \"nsAccountParameterValueDbId\": \"<uuid>\",\n \"nsAccountParameterValue\": {\n  \"id\": \"<uuid>\",\n  \"parameterValueReferenceId\": \"<uuid>\",\n  \"parameterReferenceId\": \"<uuid>\",\n  \"parameterTypeId\": \"<uuid>\",\n  \"parameterTypeCode\": \"<string>\",\n  \"organizationId\": \"<uuid>\",\n  \"datasetId\": \"<uuid>\",\n  \"code\": \"<string>\",\n  \"status\": \"<string>\",\n  \"languageDescriptions\": [\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   }\n  ],\n  \"suppliers\": [\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   }\n  ],\n  \"createdDate\": \"<dateTime>\",\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedBy\": \"<string>\"\n },\n \"parameterValueId\": \"<uuid>\"\n}"
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "PWA /clients/ID/flags/ID/ - change",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"{{desFlag}} -Edit\", \n  \"color\": \"{{greenFlag}}\",\n  \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/flags/{{flagId}}",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"flags",
+								"{{flagId}}"
+							]
+						},
+						"description": "Gets a supplier for a given client."
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<uuid>\",\n \"erpVendorId\": \"<string>\",\n \"bankAccounts\": [\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  },\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  }\n ],\n \"name\": \"<string>\",\n \"country\": \"<string>\",\n \"city\": \"<string>\",\n \"street\": \"<string>\",\n \"zip\": \"<string>\",\n \"vatId\": \"<string>\",\n \"phone\": \"<string>\",\n \"email\": \"<string>\",\n \"organizationAuthorityCode\": \"<string>\",\n \"status\": \"<string>\",\n \"organizationId\": \"<uuid>\",\n \"datasetId\": \"<uuid>\",\n \"nsAccount\": \"<uuid>\",\n \"nsAccountParameterValueDbId\": \"<uuid>\",\n \"nsAccountParameterValue\": {\n  \"id\": \"<uuid>\",\n  \"parameterValueReferenceId\": \"<uuid>\",\n  \"parameterReferenceId\": \"<uuid>\",\n  \"parameterTypeId\": \"<uuid>\",\n  \"parameterTypeCode\": \"<string>\",\n  \"organizationId\": \"<uuid>\",\n  \"datasetId\": \"<uuid>\",\n  \"code\": \"<string>\",\n  \"status\": \"<string>\",\n  \"languageDescriptions\": [\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   }\n  ],\n  \"suppliers\": [\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   }\n  ],\n  \"createdDate\": \"<dateTime>\",\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedBy\": \"<string>\"\n },\n \"parameterValueId\": \"<uuid>\"\n}"
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "PWA /clients/ID/flags/ID - isChanged",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"flagId\", jsonData.id);\r",
+									"pm.environment.set(\"color\", jsonData.color);\r",
+									"pm.environment.set(\"orgId\", jsonData.organizationId);\r",
+									"pm.environment.set(\"cltId\", jsonData.clientId);\r",
+									"pm.environment.set(\"des\", jsonData.description);\r",
+									"pm.environment.set(\"act\", jsonData.active);\r",
+									"\r",
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName, \" \" +  function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"des\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"color\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"act\");\r",
+									"});\r",
+									"console.log(\"description is : \" + pm.environment.get(\"des\"));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/flags/{{flagId}}",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"flags",
+								"{{flagId}}"
+							]
+						},
+						"description": "Gets a supplier for a given client."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<uuid>\",\n \"erpVendorId\": \"<string>\",\n \"bankAccounts\": [\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  },\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  }\n ],\n \"name\": \"<string>\",\n \"country\": \"<string>\",\n \"city\": \"<string>\",\n \"street\": \"<string>\",\n \"zip\": \"<string>\",\n \"vatId\": \"<string>\",\n \"phone\": \"<string>\",\n \"email\": \"<string>\",\n \"organizationAuthorityCode\": \"<string>\",\n \"status\": \"<string>\",\n \"organizationId\": \"<uuid>\",\n \"datasetId\": \"<uuid>\",\n \"nsAccount\": \"<uuid>\",\n \"nsAccountParameterValueDbId\": \"<uuid>\",\n \"nsAccountParameterValue\": {\n  \"id\": \"<uuid>\",\n  \"parameterValueReferenceId\": \"<uuid>\",\n  \"parameterReferenceId\": \"<uuid>\",\n  \"parameterTypeId\": \"<uuid>\",\n  \"parameterTypeCode\": \"<string>\",\n  \"organizationId\": \"<uuid>\",\n  \"datasetId\": \"<uuid>\",\n  \"code\": \"<string>\",\n  \"status\": \"<string>\",\n  \"languageDescriptions\": [\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   }\n  ],\n  \"suppliers\": [\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   }\n  ],\n  \"createdDate\": \"<dateTime>\",\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedBy\": \"<string>\"\n },\n \"parameterValueId\": \"<uuid>\"\n}"
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "PWA /clients/ID/flags/ID -delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/flags/{{flagId}}",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"flags",
+								"{{flagId}}"
+							]
+						},
+						"description": "Gets a supplier for a given client."
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<uuid>\",\n \"erpVendorId\": \"<string>\",\n \"bankAccounts\": [\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  },\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  }\n ],\n \"name\": \"<string>\",\n \"country\": \"<string>\",\n \"city\": \"<string>\",\n \"street\": \"<string>\",\n \"zip\": \"<string>\",\n \"vatId\": \"<string>\",\n \"phone\": \"<string>\",\n \"email\": \"<string>\",\n \"organizationAuthorityCode\": \"<string>\",\n \"status\": \"<string>\",\n \"organizationId\": \"<uuid>\",\n \"datasetId\": \"<uuid>\",\n \"nsAccount\": \"<uuid>\",\n \"nsAccountParameterValueDbId\": \"<uuid>\",\n \"nsAccountParameterValue\": {\n  \"id\": \"<uuid>\",\n  \"parameterValueReferenceId\": \"<uuid>\",\n  \"parameterReferenceId\": \"<uuid>\",\n  \"parameterTypeId\": \"<uuid>\",\n  \"parameterTypeCode\": \"<string>\",\n  \"organizationId\": \"<uuid>\",\n  \"datasetId\": \"<uuid>\",\n  \"code\": \"<string>\",\n  \"status\": \"<string>\",\n  \"languageDescriptions\": [\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   }\n  ],\n  \"suppliers\": [\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   }\n  ],\n  \"createdDate\": \"<dateTime>\",\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedBy\": \"<string>\"\n },\n \"parameterValueId\": \"<uuid>\"\n}"
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "PWA /clients/ID/flags/ID -isDeleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"console.log(pm.response.json());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/flags/{{flagId}}",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"flags",
+								"{{flagId}}"
+							]
+						},
+						"description": "Gets a supplier for a given client."
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<uuid>\",\n \"erpVendorId\": \"<string>\",\n \"bankAccounts\": [\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  },\n  {\n   \"accountNumber\": \"<string>\",\n   \"bankName\": \"<string>\",\n   \"ibanAccountNumber\": \"<string>\",\n   \"swiftCode\": \"<string>\",\n   \"status\": \"<string>\",\n   \"supplierId\": \"<uuid>\"\n  }\n ],\n \"name\": \"<string>\",\n \"country\": \"<string>\",\n \"city\": \"<string>\",\n \"street\": \"<string>\",\n \"zip\": \"<string>\",\n \"vatId\": \"<string>\",\n \"phone\": \"<string>\",\n \"email\": \"<string>\",\n \"organizationAuthorityCode\": \"<string>\",\n \"status\": \"<string>\",\n \"organizationId\": \"<uuid>\",\n \"datasetId\": \"<uuid>\",\n \"nsAccount\": \"<uuid>\",\n \"nsAccountParameterValueDbId\": \"<uuid>\",\n \"nsAccountParameterValue\": {\n  \"id\": \"<uuid>\",\n  \"parameterValueReferenceId\": \"<uuid>\",\n  \"parameterReferenceId\": \"<uuid>\",\n  \"parameterTypeId\": \"<uuid>\",\n  \"parameterTypeCode\": \"<string>\",\n  \"organizationId\": \"<uuid>\",\n  \"datasetId\": \"<uuid>\",\n  \"code\": \"<string>\",\n  \"status\": \"<string>\",\n  \"languageDescriptions\": [\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"languageDescriptionReferenceId\": \"<uuid>\",\n    \"languageCode\": \"<string>\",\n    \"description\": \"<string>\",\n    \"parameterValueId\": \"<uuid>\",\n    \"parameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"createdDate\": \"<dateTime>\",\n    \"modifiedDate\": \"<dateTime>\",\n    \"createdBy\": \"<string>\",\n    \"modifiedBy\": \"<string>\"\n   }\n  ],\n  \"suppliers\": [\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   },\n   {\n    \"id\": \"<uuid>\",\n    \"erpVendorId\": \"<string>\",\n    \"bankAccounts\": [\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     },\n     {\n      \"accountNumber\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"ibanAccountNumber\": \"<string>\",\n      \"swiftCode\": \"<string>\",\n      \"status\": \"<string>\",\n      \"supplierId\": \"<uuid>\"\n     }\n    ],\n    \"name\": \"<string>\",\n    \"country\": \"<string>\",\n    \"city\": \"<string>\",\n    \"street\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"vatId\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"email\": \"<string>\",\n    \"organizationAuthorityCode\": \"<string>\",\n    \"status\": \"<string>\",\n    \"organizationId\": \"<uuid>\",\n    \"datasetId\": \"<uuid>\",\n    \"nsAccount\": \"<uuid>\",\n    \"nsAccountParameterValueDbId\": \"<uuid>\",\n    \"nsAccountParameterValue\": {\n     \"value\": \"<Circular reference to #/components/schemas/Semine.SupplierService.Models.Entities.ParameterValue detected>\"\n    },\n    \"parameterValueId\": \"<uuid>\"\n   }\n  ],\n  \"createdDate\": \"<dateTime>\",\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": \"<string>\",\n  \"modifiedBy\": \"<string>\"\n },\n \"parameterValueId\": \"<uuid>\"\n}"
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/suppliers/search?query=<string>&skip=<integer>&take=<integer>",
+									"host": [
+										"{{PWA}}"
+									],
+									"path": [
+										"organizations",
+										"{{organizationId}}",
+										"clients",
+										"{{datasetId}}",
+										"suppliers",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "<string>"
+										},
+										{
+											"key": "skip",
+											"value": "<integer>"
+										},
+										{
+											"key": "take",
+											"value": "<integer>"
+										}
+									],
+									"variable": [
+										{
+											"key": "organizationId"
+										},
+										{
+											"key": "clientId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

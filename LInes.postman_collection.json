@@ -1,0 +1,1347 @@
+{
+	"info": {
+		"_postman_id": "4b098e4c-59ed-4de3-827d-01def9302237",
+		"name": "LInes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "IDP /connect/token INT - Try Init",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Init try\r",
+									"var tryCounter = pm.globals.get(\"tryCounter\");\r",
+									"// console.log(pm.response.json());\r",
+									"\r",
+									"if (pm.response.code == 200 && pm.globals.get(\"tryCounter\") < pm.environment.get(\"tryCounterLimit\")) {\r",
+									"\r",
+									"    // If we get a token, pass test and go directly to target\r",
+									"    //   console.log(pm.environment.get(\"TokenINT\"));\r",
+									"    if (pm.response.json().access_token != null) {\r",
+									"\r",
+									"        // pm.environment.set(\"Token\", pm.response.json().access_token);\r",
+									"        \r",
+									"        pm.environment.set(\"TokenINT\", pm.response.json().access_token);\r",
+									"        pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () { pm.response.to.have.status(200); });\r",
+									"        console.log(\"tryCounter init \" + tryCounter);\r",
+									"        postman.setNextRequest();\r",
+									"        // console.log(pm.environment.get(\"TokenINT\"));\r",
+									"        return;\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Wait 5 secs before the next try\r",
+									"(function myLoop(i) {\r",
+									"    setTimeout(function () {\r",
+									"        console.log('sleep ' + i);\r",
+									"        if (--i) myLoop(i);\r",
+									"    }, 1000)\r",
+									"})(5);      "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"tryCounter\", 0);\r",
+									"pm.environment.set(\"tryCounterLimit\", 10)\r",
+									"\r",
+									"pm.globals.set(\"retries\", 0);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{Oauth2ClientSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{Oauth2ClientId}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "{{ScopeIntegration}}",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "{{UserIntegration}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{PassIntegration}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{IDP}}/connect/token",
+							"host": [
+								"{{IDP}}"
+							],
+							"path": [
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "IDP /connect/token PWA - Try Init",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Init try\r",
+									"var tryCounter = pm.globals.get(\"tryCounter\");\r",
+									"// console.log(pm.response.json());\r",
+									"\r",
+									"if (pm.response.code == 200 && pm.globals.get(\"tryCounter\") < pm.environment.get(\"tryCounterLimit\")) {\r",
+									"\r",
+									"    // If we get a token, pass test and go directly to target\r",
+									"\r",
+									"    if (pm.response.json().access_token != null) {\r",
+									"\r",
+									"        pm.environment.set(\"Token\", pm.response.json().access_token);\r",
+									"        pm.environment.set(\"TokenPWA\", pm.response.json().access_token);\r",
+									"        pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () { pm.response.to.have.status(200); });\r",
+									"        console.log(\"tryCounter init \" + tryCounter);\r",
+									"        postman.setNextRequest();\r",
+									"        return;\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Wait 5 secs before the next try\r",
+									"(function myLoop(i) {\r",
+									"    setTimeout(function () {\r",
+									"        console.log('sleep ' + i);\r",
+									"        if (--i) myLoop(i);\r",
+									"    }, 1000)\r",
+									"})(5);      "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"tryCounter\", 0);\r",
+									"\r",
+									"\r",
+									"pm.globals.set(\"retries\", 0);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{Oauth2ClientSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{Oauth2ClientId}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "{{ScopeController}}",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "{{UserController}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{PassController}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{IDP}}/connect/token",
+							"host": [
+								"{{IDP}}"
+							],
+							"path": [
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find Codes",
+			"item": [
+				{
+					"name": "INT clients/ID/accountingcodes makeAccount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method +  \" \" + pm.info.requestName +\" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// pm.environment.set(\"count\", 5);\r",
+									"\r",
+									"console.log(\"Account is creted!\");\r",
+									"\r",
+									"pm.environment.set(\"firstRequest\", pm.info.requestName);\r",
+									"\r",
+									"console.log(pm.environment.get(\"firstRequest\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment = require('moment');\r",
+									"pm.environment.set('cAccountingCode-A', 'Adam-1-A-1' + moment().format(\"YYMM\"));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenINT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"code\":\"{{cAccountingCode-A}}\",\n        \"status\": \"Active\",\n        \"description\": [\n            {\n                \"description\": \"Adams konto-22\",\n                \"languageCode\": \"Norwegian\"\n            },\n            {\n                \"description\": \"{{cAccountingCode-A}} - Account code\",\n                \"languageCode\": \"English\"\n            }\n        ]\n    }\n]"
+						},
+						"url": {
+							"raw": "{{INT}}/organizations/{{organizationId}}/clients/{{datasetId}}/accountingcodes",
+							"host": [
+								"{{INT}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"accountingcodes"
+							],
+							"variable": [
+								{
+									"key": "organizationId",
+									"value": "<uuid>",
+									"type": "string",
+									"description": "(Required) Organization id of the organization to which the accounting codes are related."
+								},
+								{
+									"key": "clientId",
+									"value": "<uuid>",
+									"type": "string",
+									"description": "(Required) Client id of the client to which the accounting codes are related."
+								}
+							]
+						},
+						"description": "Inserts and updates accounting codes for a given client"
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 - makeLIne",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"    pm.environment.set(\"cInvoiceLineId\", pm.response.json().invoiceLines[0].invoiceLineId);\r",
+									"    pm.environment.set(\"cAccountTypeParameterId\", pm.response.json().invoiceLines[0].accountTypeParameterId);\r",
+									"}\r",
+									"\r",
+									"pm.collectionVariables.set(\"lineNumber\", pm.response.json().invoiceLines[0].lineNumber);\r",
+									"\r",
+									"console.log(\"lineNumber is : \" + pm.collectionVariables.get(\"lineNumber\"));\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"\r",
+									"    var jsonData = pm.response.json().invoiceLines[0];\r",
+									"\r",
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Line number is correct.\", function () {\r",
+									"        pm.expect(jsonData.lineNumber).to.eql(pm.variables.get(\"lineNumber\"));\r",
+									"    });\r",
+									"}    \r",
+									"\r",
+									"console.log(\"Line is creted.\");\r",
+									"\r",
+									"//==========//For create Lopp//==================\r",
+									"// var currentCount = pm.environment.get(\"count\")\r",
+									"// if (currentCount > 0){\r",
+									"//  currentCount = currentCount -1 ;\r",
+									"//  pm.environment.set(\"count\", currentCount);\r",
+									"//     postman.setNextRequest(pm.info.requestId);\r",
+									"// } else {\r",
+									"//     postman.setNextRequest();\r",
+									"// }"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines"
+							],
+							"query": [
+								{
+									"key": "take",
+									"value": "15",
+									"disabled": true
+								},
+								{
+									"key": "query",
+									"value": "{{cAccountingCode-A}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 - makeSplit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"    pm.environment.set(\"cInvoiceLineId-1\", pm.response.json().invoiceLines[0].invoiceLineId);\r",
+									"    pm.environment.set(\"cAccountTypeParameterId-1\", pm.response.json().invoiceLines[0].accountTypeParameterId);\r",
+									"}\r",
+									"//console.log( pm.environment.get(\"cInvoiceLineId-1\"));\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"    pm.environment.set(\"cInvoiceLineId-2\", pm.response.json().invoiceLines[1].invoiceLineId);\r",
+									"    pm.environment.set(\"cAccountTypeParameterId-2\", pm.response.json().invoiceLines[1].accountTypeParameterId);\r",
+									"}\r",
+									"\r",
+									"var lineNumber = pm.collectionVariables.get(\"lineNumber\")\r",
+									"\r",
+									"console.log(\"lineNumber is : \" + lineNumber);\r",
+									"\r",
+									"  var jsonData = pm.response.json();\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Line number is correct.\", function () {\r",
+									"        pm.expect(jsonData.invoiceLines[0].lineNumber).to.eql(lineNumber + 1);\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"\r",
+									"    pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Line number is correct.\", function () {\r",
+									"        pm.expect(jsonData.invoiceLines[1].lineNumber).to.eql(lineNumber + 2);\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"pm.collectionVariables.set(\"lineNumber\", pm.response.json().invoiceLines[1].lineNumber);\r",
+									"\r",
+									"console.log(\"lineNumber is : \" + pm.collectionVariables.get(\"lineNumber\"));\r",
+									"\r",
+									"console.log(\"Line is split.\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// var lineNumber = pm.variables.get('lineNumber');",
+									"",
+									"// pm.variables.set(\"lineNumber\", parseInt(lineNumber));",
+									"",
+									"// console.log(pm.variables.get(lineNumber));",
+									"",
+									"//var lineNumber = pm.collectionVariables.get(\"lineNumber\")",
+									"",
+									"//console.log(\"lineNumber is : \" + lineNumber);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines/{{cInvoiceLineId}}/split/?rowCount=2",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines",
+								"{{cInvoiceLineId}}",
+								"split",
+								""
+							],
+							"query": [
+								{
+									"key": "take",
+									"value": "15",
+									"disabled": true
+								},
+								{
+									"key": "query",
+									"value": "{{cAccountingCode-A}}",
+									"disabled": true
+								},
+								{
+									"key": "rowCount",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 - makeCopy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"    pm.environment.set(\"cInvoiceLineId-3\", pm.response.json().invoiceLines[0].invoiceLineId);\r",
+									"    pm.environment.set(\"cAccountTypeParameterId-3\", pm.response.json().invoiceLines[0].accountTypeParameterId);\r",
+									"}\r",
+									"\r",
+									"var lineNumber=pm.variables.get(\"lineNumber\");\r",
+									"console.log(\"lineNumber is : \" + lineNumber);\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"\r",
+									"    var jsonData = pm.response.json().invoiceLines[0];\r",
+									" pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Line number is correct:\", function () {\r",
+									"        pm.expect(jsonData.lineNumber).to.eql(lineNumber + 1);\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"pm.collectionVariables.set(\"lineNumber\", pm.response.json().invoiceLines[0].lineNumber);\r",
+									"\r",
+									"console.log(\"lineNumber is : \" + pm.collectionVariables.get(\"lineNumber\"));\r",
+									"\r",
+									"console.log(\"Line is copied.\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines/{{cInvoiceLineId-2}}/copy",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines",
+								"{{cInvoiceLineId-2}}",
+								"copy"
+							],
+							"query": [
+								{
+									"key": "take",
+									"value": "15",
+									"disabled": true
+								},
+								{
+									"key": "query",
+									"value": "{{cAccountingCode-A}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 - makeGenerate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"\r",
+									"console.log(\"It is genereted.\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/accountinglines/generate?documentType=CostInvoice",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"accountinglines",
+								"generate"
+							],
+							"query": [
+								{
+									"key": "take",
+									"value": "15",
+									"disabled": true
+								},
+								{
+									"key": "query",
+									"value": "{{cAccountingCode-A}}",
+									"disabled": true
+								},
+								{
+									"key": "documentType",
+									"value": "CostInvoice"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 - XLS_Exporter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"    pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : XLSX received\", function () {\r",
+									"        pm.expect(pm.response.text()).to.include(\"PK\u0003\u0004\u0014\u0000\u0000\"); // Start of file\r",
+									"        pm.expect(pm.response.text()).to.include(\"\u0000S\u0003\u0000\u0000�\u001d\u0000\u0000\u0000\u0000\"); // End of file\r",
+									"        pm.expect(pm.response.size().header).to.be.greaterThan(100);\r",
+									"        pm.expect(pm.response.size().body).to.be.greaterThan(1000);\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"console.log(\"Invoice is exported.\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"invoiceIds\": [\n        \"{{cInvoiceId}}\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/export/invoicelines?sort=%5B%5D&filter=%5B%5D",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"export",
+								"invoicelines"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "%5B%5D"
+								},
+								{
+									"key": "take",
+									"value": "15",
+									"disabled": true
+								},
+								{
+									"key": "query",
+									"value": "{{cAccountingCode-A}}",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "%5B%5D"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 -linesGroups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"if (pm.response.code == 201) {\r",
+									"    pm.environment.set(\"cMasterLineId\", pm.response.json().invoiceLines[0].parentInvoiceLineId);\r",
+									"}\r",
+									"\r",
+									"console.log(\"Lines \" + pm.environment.get(\"cInvoiceLineId-1\") + \", \" + pm.environment.get(\"cInvoiceLineId-2\") + \", \" + pm.environment.get(\"cInvoiceLineId-3\") + \" are grouped under \" + pm.environment.get(\"cMasterLineId\") + \".\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"masterLineSourceLineId\":\n\n        \"{{cInvoiceLineId-1}}\",\n\n        \"invoiceLineIds\":\n        [\n            \"{{cInvoiceLineId-1}}\",\n            \"{{cInvoiceLineId-2}}\",\n            \"{{cInvoiceLineId-3}}\"\n         ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines/groups",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 -seeGroups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"console.log(pm.environment.get('cMasterLineId'));\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"for (x in jsonData) {\r",
+									"    if (jsonData[x].parentInvoiceLineId = pm.environment.get('cMasterLineId')) {\r",
+									"        var groups =jsonData[x].parentInvoiceLineId\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Groups Found\", function () {\r",
+									"    pm.expect(pm.environment.get('cMasterLineId')).to.eql(groups);\r",
+									"});\r",
+									"console.log(\"Groups is : \" + groups + \".\");\r",
+									"\r",
+									"\r",
+									"console.log(\"Espected datas are : quantity =0, unitPrice=1, netAmount=0.50, totalAmount=0.50\");\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"\r",
+									"    var jsonData = pm.response.json().invoiceLines[0];\r",
+									"\r",
+									"\r",
+									"    ///////// Check periods applied /////////\r",
+									"    pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Period was found\", function () {\r",
+									"        pm.expect(jsonData.startPeriodMonth).to.eql(null);\r",
+									"        pm.expect(jsonData.totalPeriod).to.eql(null);\r",
+									"        pm.expect(jsonData.startPeriodYear).to.eql(null);\r",
+									"    });\r",
+									"\r",
+									"    ////////// Amounts are correct /////////\r",
+									"    pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Amounts are correct\", function () {\r",
+									"        pm.expect(jsonData.quantity).to.eql(0);\r",
+									"        pm.expect(jsonData.unitPrice).to.eql(1);\r",
+									"        pm.expect(jsonData.netAmount).to.eql(0.50);\r",
+									"        pm.expect(jsonData.totalAmount).to.eql(0.50);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									"\r",
+									"//console.log(pm.response.json());\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 -splitGroups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"console.log(\"Group \" + pm.environment.get(\"cMasterLineId\") + \" is split.\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines/groups/?masterInvoiceLineIds={{cMasterLineId}}",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines",
+								"groups",
+								""
+							],
+							"query": [
+								{
+									"key": "masterInvoiceLineIds",
+									"value": "{{cMasterLineId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 -seeLine",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"console.log(\"Espected datas are : quantity =0, unitPrice=1, netAmount=0.50, totalAmount=0.50.\");\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"\r",
+									"    var jsonData = pm.response.json().invoiceLines[0];\r",
+									"\r",
+									"\r",
+									"    ///////// Check periods applied /////////\r",
+									"    pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Period was found\", function () {\r",
+									"        pm.expect(jsonData.startPeriodMonth).to.eql(null);\r",
+									"        pm.expect(jsonData.totalPeriod).to.eql(null);\r",
+									"        pm.expect(jsonData.startPeriodYear).to.eql(null);\r",
+									"    });\r",
+									"\r",
+									"    ////////// Amounts are correct /////////\r",
+									"    pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Amounts are correct\", function () {\r",
+									"        pm.expect(jsonData.quantity).to.eql(0);\r",
+									"        pm.expect(jsonData.unitPrice).to.eql(1);\r",
+									"        pm.expect(jsonData.netAmount).to.eql(0.50);\r",
+									"        pm.expect(jsonData.totalAmount).to.eql(0.50);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									"\r",
+									"console.log(pm.response.json());\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /values/condensed 1 Ledger",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//////// Set Environment Variables /////////\r",
+									"if (pm.response.code == 200) {\r",
+									"    var jsonData = pm.response.json()[0];\r",
+									"    pm.environment.set(\"parameterValueIdLedger\", jsonData.parameterValueId);\r",
+									"}\r",
+									"\r",
+									"console.log(\"Account is : \" + pm.environment.get(\"cAccountingCode-A\"));\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/parameters/{{parameterIdLedger}}/values/condensed?query={{cAccountingCode-A}}",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"parameters",
+								"{{parameterIdLedger}}",
+								"values",
+								"condensed"
+							],
+							"query": [
+								{
+									"key": "take",
+									"value": "15",
+									"disabled": true
+								},
+								{
+									"key": "query",
+									"value": "Adam-18",
+									"disabled": true
+								},
+								{
+									"key": "query",
+									"value": "{{cAccountingCode-A}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 -putAccount",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": null,\r\n    \"quantity\": 2,\r\n    \"unitPrice\": 2,\r\n    \"netAmount\": 2,\r\n    \"vatRate\": 15,\r\n    \"discount\": 0,\r\n    \"issueDate\": \"2021-01-24T09:54:33.048Z\",\r\n    \"startPeriodMonth\": 11,\r\n    \"startPeriodYear\": 20,\r\n    \"totalPeriod\": 3,\r\n    \"gtin\": \"GTIN-UBL-20210108-1511024\",\r\n    \"accountTypeParameterId\": \"{{parameterIdLedger}}\",\r\n    \"accountingParameters\": [\r\n        {\r\n            \"parameterId\": \"{{parameterIdLedger}}\",\r\n            \"parameterValueId\": \"{{parameterValueIdLedger}}\"\r\n        }\r\n        \r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines/{{cInvoiceLineId-3}}",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines",
+								"{{cInvoiceLineId-3}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 -seeChanging",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"    pm.environment.set(\"cInvoiceLineId-3\", pm.response.json().invoiceLines[0].invoiceLineId);\r",
+									"    pm.environment.set(\"cAccountTypeParameterId-3\", pm.response.json().invoiceLines[0].accountTypeParameterId);\r",
+									"}\r",
+									"\r",
+									"\r",
+									"if (pm.response.code == 200) {\r",
+									"\r",
+									"    var jsonData = pm.response.json().invoiceLines[0];\r",
+									"\r",
+									"\r",
+									"    ///////// Check periods applied /////////\r",
+									"    pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Period was found\", function () {\r",
+									"        pm.expect(jsonData.startPeriodMonth).to.eql(11);\r",
+									"        pm.expect(jsonData.totalPeriod).to.eql(3);\r",
+									"        pm.expect(jsonData.startPeriodYear).to.eql(20);\r",
+									"    });\r",
+									"\r",
+									"    ////////// Amounts are correct /////////\r",
+									"    pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : Amounts are correct\", function () {\r",
+									"        pm.expect(jsonData.quantity).to.eql(2);\r",
+									"        pm.expect(jsonData.unitPrice).to.eql(2);\r",
+									"        pm.expect(jsonData.netAmount).to.eql(2);\r",
+									"        pm.expect(jsonData.totalAmount).to.eql(2.30);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									"console.log(\"Espected datas are : quantity =2, unitPrice=2, netAmount=2, totalAmount=2.30.\");\r",
+									"\r",
+									"//Using lineNUmber for multiple runnig.\r",
+									"pm.collectionVariables.set(\"lineNumber\", pm.response.json().invoiceLines[0].lineNumber);\r",
+									"\r",
+									"console.log(\"lineNumber is : \" + pm.collectionVariables.get(\"lineNumber\"));\r",
+									"\r",
+									"console.log(pm.response.json());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines/{{cInvoiceLineId-3}}",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines",
+								"{{cInvoiceLineId-3}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 -deleteLine-1,-2,-3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"console.log(\"Lines \" + pm.environment.get(\"cInvoiceLineId-1\") + \", \" + pm.environment.get(\"cInvoiceLineId-2\") + \", \" + pm.environment.get(\"cInvoiceLineId-3\") + \" are deleted.\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"invoiceLineIds\":\n[\n    \"{{cInvoiceLineId-1}}\",\n    \"{{cInvoiceLineId-2}}\",\n    \"{{cInvoiceLineId-3}}\"\n    ]\n    }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines/deletelines",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines",
+								"deletelines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PWA /invoiceLines/ID 1 -checkDelete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.environment.get(\"ENV\") + \" \" + pm.request.method + \" \" + pm.info.requestName + \" : 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"console.log(\"Line \" + pm.environment.get(\"cInvoiceLineId-3\") + \" is deleted.\");\r",
+									"\r",
+									"//Run to and with ..... line\r",
+									"var lineNumber = pm.collectionVariables.get(\"lineNumber\")\r",
+									"if (lineNumber <3900){\r",
+									"     postman.setNextRequest(pm.environment.get(\"firstRequest\"));\r",
+									"} else {\r",
+									"    postman.setNextRequest();\r",
+									"}\r",
+									"\r",
+									"console.log(\"Lines \" + pm.environment.get(\"cInvoiceLineId-1\") + \", \" + pm.environment.get(\"cInvoiceLineId-2\") + \", \" + pm.environment.get(\"cInvoiceLineId-3\") + \" are deleted.\");\r",
+									"\r",
+									"//pm.collectionVariables.unset(\"lineNumber\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PWA}}/organizations/{{organizationId}}/clients/{{datasetId}}/invoices/{{cInvoiceId}}/invoicelines",
+							"host": [
+								"{{PWA}}"
+							],
+							"path": [
+								"organizations",
+								"{{organizationId}}",
+								"clients",
+								"{{datasetId}}",
+								"invoices",
+								"{{cInvoiceId}}",
+								"invoicelines"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "lineNumber",
+			"value": ""
+		}
+	]
+}
